@@ -1,6 +1,10 @@
-import Image from 'next/image';
 import styles from './ui/styles/page.module.css';
+import Tictactoe from './components/tictactoe';
 
 export default function Home() {
-    return <h1>Tic tac toe!</h1>;
+    return (
+        <div className={styles.container}>
+            <Tictactoe />
+        </div>
+    );
 }
