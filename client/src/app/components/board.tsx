@@ -9,6 +9,17 @@ import DiffilcutySelector from './diffilcutySelector';
 import GameMenu from './gameMenu';
 
 export default function Board({}) {
+    const {
+        boardData,
+        updateBoard,
+        resetBoard,
+        rank,
+        winner,
+        setWinner,
+        onDifficultyChange,
+        gameDifficulty,
+    } = useBoard();
+
     const { isOpen, openModal, closeModal } = useModal();
 
     const handleSquareClick = (index: number) => {
