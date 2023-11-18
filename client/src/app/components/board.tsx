@@ -18,11 +18,18 @@ export default function Board({}) {
         setWinner,
         onDifficultyChange,
         gameDifficulty,
+        turn,
+        resetTurn,
+        loading,
     } = useBoard();
 
     const { isOpen, openModal, closeModal } = useModal();
 
     const handleSquareClick = (index: number) => {
+        if (turn === 'O') {
+            return;
+        }
+
         if (!winner) {
             updateBoard(index);
         }
@@ -31,17 +38,30 @@ export default function Board({}) {
     const handleReset = () => {
         resetBoard();
         setWinner(null);
+        resetTurn();
     };
 
     const handleRankOnClick = () => {
         openModal();
     };
 
-    const mainModalContent = `Victories: ${rank.victories}, Defeats: ${rank.defeats}, Draws: ${rank.draws}`;
+    const mainModalContent = rank
+        ? `Victories: ${rank.victories}, Defeats: ${rank.defeats}, Draws: ${rank.draws}`
+        : 'Rank could not be retrieved';
 
     return (
         <div>
             <GameStatus winner={winner} />
+
+            {loading && !winner && (
+                <div className="flex justify-center mb-4">
+                    <img
+                        className="w-12"
+                        src="/loading.gif"
+                        alt="Wait until IA chooses a move"
+                    />
+                </div>
+            )}
 
             <section className={styles.board}>
                 {boardData.map((squareValue, index) => {

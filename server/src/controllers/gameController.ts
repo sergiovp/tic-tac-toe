@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import chooseMove from '../utils/chooseMove';
 import { checkWinner } from '../utils/game';
-import gameService from '../services/gameService';
 import getErrorMessage from '../utils/getErrorMessage';
+import gameService from '../services/gameService';
 
 const move = (req: Request, res: Response) => {
     try {
