@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_API_URL ?? 'http://localhost:7777';
+const API_URL = process.env.NEXT_API_URL ?? 'http://localhost:3001';
 
 export const useGameAPI = (
     boardData: Board,
