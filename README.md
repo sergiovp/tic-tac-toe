@@ -60,3 +60,8 @@ npm run test
     -   Next
 
 ### Some app screenshots 📸
+
+![](https://github.com/sergiovp/tic-tac-toe/blob/write-doc/doc/screenshots/1.png)
+![](https://github.com/sergiovp/tic-tac-toe/blob/write-doc/doc/screenshots/2.png)
+![](https://github.com/sergiovp/tic-tac-toe/blob/write-doc/doc/screenshots/3.png)
+![](https://github.com/sergiovp/tic-tac-toe/blob/write-doc/doc/screenshots/4.png)
