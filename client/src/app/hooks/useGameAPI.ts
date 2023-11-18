@@ -1,3 +1,5 @@
+const API_URL = process.env.NEXT_API_URL ?? 'http://localhost:7777';
+
 export const useGameAPI = (
     boardData: Board,
     winner: Winner,
@@ -5,7 +7,7 @@ export const useGameAPI = (
 ) => {
     const fetchGetRank = async () => {
         try {
-            const res = await fetch('http://localhost:7777/game/rank');
+            const res = await fetch(`${API_URL}/game/rank`);
             const data = await res.json();
             return data.results;
         } catch (error) {
@@ -18,7 +20,7 @@ export const useGameAPI = (
             return 'Draw';
         }
         try {
-            const res = await fetch('http://localhost:7777/game/winner', {
+            const res = await fetch(`${API_URL}/game/winner`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,7 +41,7 @@ export const useGameAPI = (
         const result =
             winner === 'X' ? 'victories' : winner === 'O' ? 'defeats' : 'draws';
         try {
-            const res = await fetch('http://localhost:7777/game/rank', {
+            const res = await fetch(`${API_URL}/game/rank`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +60,7 @@ export const useGameAPI = (
 
     const fetchGetMove = async () => {
         try {
-            const res = await fetch('http://localhost:7777/game/move', {
+            const res = await fetch(`${API_URL}/game/move`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
