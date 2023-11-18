@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useGameAPI } from './useGameAPI';
+import wait from '../utils/wait';
+import { checkWinner } from '../utils/checkWinner';
 
 export const useBoard = () => {
     const [boardData, setBoardData] = useState<BoardElement[]>(
@@ -14,6 +16,7 @@ export const useBoard = () => {
     const [winner, setWinner] = useState<Winner>(null);
     const [gameDifficulty, setGameDifficulty] =
         useState<GameDifficulty>('easy');
+    const [loading, setLoading] = useState<boolean>(false);
 
     const { fetchUpdateRank, fetchWinner, fetchGetRank, fetchGetMove } =
         useGameAPI(boardData, winner, gameDifficulty);
@@ -37,6 +40,10 @@ export const useBoard = () => {
         setBoardData(Array(9).fill(null));
     };
 
+    const resetTurn = () => {
+        setTurn('X');
+    };
+
     const getWinner = async () => {
         const winner = await fetchWinner();
         setWinner(winner);
@@ -53,8 +60,11 @@ export const useBoard = () => {
     };
 
     const getMove = async () => {
+        setLoading(true);
         const move = await fetchGetMove();
+        await wait(1000);
         updateBoard(move);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -73,7 +83,7 @@ export const useBoard = () => {
     }, [winner]);
 
     useEffect(() => {
-        if (turn === 'X') {
+        if (turn === 'X' || checkWinner(boardData)) {
             return;
         }
 
@@ -91,5 +101,7 @@ export const useBoard = () => {
         setWinner,
         onDifficultyChange,
         gameDifficulty,
+        loading,
+        resetTurn,
     };
 };
