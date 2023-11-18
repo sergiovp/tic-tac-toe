@@ -4,12 +4,14 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "concurrently \"cd client && npm i && npm run dev\" \"cd server && npm i && npm run dev\"",
+        "test": "concurrently \"cd server && npm i && npm run test\"",
         "prettier": "npx prettier --write ."
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "concurrently": "^8.2.2",
         "prettier": "^3.0.3"
     }
 }
