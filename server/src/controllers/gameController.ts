@@ -1,15 +1,13 @@
 import { Request, Response } from 'express';
 import chooseMove from '../utils/chooseMove';
-import { checkWinner } from '../utils/game';
+import { determineWinner } from '../utils/game';
 import getErrorMessage from '../utils/getErrorMessage';
 import gameService from '../services/gameService';
 
 const move = (req: Request, res: Response) => {
     try {
         const { board, challenge } = req.body;
-
         const nextMove = chooseMove(board, challenge);
-
         res.status(200).send({ nextMove });
     } catch (error) {
         res.status(500).json({
@@ -21,9 +19,7 @@ const move = (req: Request, res: Response) => {
 const isWinner = (req: Request, res: Response) => {
     try {
         const { board } = req.body;
-
-        const winner = checkWinner(board);
-
+        const winner = determineWinner(board);
         res.status(200).send({ winner });
     } catch (error) {
         res.status(500).json({
@@ -46,7 +42,6 @@ const getRank = async (_req: Request, res: Response) => {
 const updateRank = async (req: Request, res: Response) => {
     try {
         const { result } = req.body;
-
         const rank = await gameService.updateRank(result);
         res.status(200).json(rank);
     } catch (error) {
