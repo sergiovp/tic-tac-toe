@@ -139,6 +139,30 @@ describe('/game/move', () => {
         expect(res.body.nextMove).toBeLessThan(9);
     });
 
+    it('Should return -1 when there is a winner', async () => {
+        const res = await request(app)
+            .post('/game/move')
+            .send({
+                board: ['X', 'X', 'X', 'O', 'O', 'X', 'O', 'O', 'X'],
+            });
+
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('nextMove');
+        expect(res.body.nextMove).toBe(-1);
+    });
+
+    it('Should return -1 when it is a draw', async () => {
+        const res = await request(app)
+            .post('/game/move')
+            .send({
+                board: ['X', 'X', 'Y', 'Y', 'Y', 'X', 'X', 'Y', 'X'],
+            });
+
+        expect(res.status).toBe(200);
+        expect(res.body).toHaveProperty('nextMove');
+        expect(res.body.nextMove).toBe(-1);
+    });
+
     it('Should handle errors when board is invalid', async () => {
         const res = await request(app)
             .post('/game/move')
