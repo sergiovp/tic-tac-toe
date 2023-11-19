@@ -2,26 +2,26 @@
 
 import styles from '../ui/styles/page.module.css';
 import Square from './square';
-import { useBoard } from '../hooks/useBoard';
+import { useGame } from '../hooks/useGame';
 import useModal from '../hooks/useModal';
 import GameStatus from './gameStatus';
 import DiffilcutySelector from './diffilcutySelector';
 import GameMenu from './gameMenu';
+import LoadingIndicator from './loadingIndicator';
+import { useReducer } from 'react';
 
-export default function Board({}) {
+export default function Board() {
     const {
         boardData,
         updateBoard,
-        resetBoard,
         rank,
         winner,
-        setWinner,
-        onDifficultyChange,
+        changeDifficulty,
         gameDifficulty,
         turn,
-        resetTurn,
         loading,
-    } = useBoard();
+        resetGame,
+    } = useGame();
 
     const { isOpen, openModal, closeModal } = useModal();
 
@@ -29,20 +29,7 @@ export default function Board({}) {
         if (turn === 'O') {
             return;
         }
-
-        if (!winner) {
-            updateBoard(index);
-        }
-    };
-
-    const handleReset = () => {
-        resetBoard();
-        setWinner(null);
-        resetTurn();
-    };
-
-    const handleRankOnClick = () => {
-        openModal();
+        updateBoard(index);
     };
 
     const mainModalContent = rank
@@ -53,15 +40,7 @@ export default function Board({}) {
         <div>
             <GameStatus winner={winner} />
 
-            {loading && !winner && (
-                <div className="flex justify-center mb-4">
-                    <img
-                        className="w-12"
-                        src="/loading.gif"
-                        alt="Wait until IA chooses a move"
-                    />
-                </div>
-            )}
+            {loading && !winner && <LoadingIndicator />}
 
             <section className={styles.board}>
                 {boardData.map((squareValue, index) => {
@@ -76,15 +55,15 @@ export default function Board({}) {
             </section>
 
             <GameMenu
-                handleRankOnClick={handleRankOnClick}
-                handleReset={handleReset}
+                handleRankOnClick={() => openModal()}
+                handleReset={() => resetGame()}
                 mainModalContent={mainModalContent}
                 isOpen={isOpen}
                 closeModal={closeModal}
             />
 
             <DiffilcutySelector
-                onChange={onDifficultyChange}
+                onChange={changeDifficulty}
                 gameDifficulty={gameDifficulty}
             />
         </div>

@@ -1,3 +1,5 @@
+export type Winner = 'X' | 'O' | 'draw' | null;
+
 type BoardElement = 'X' | 'O' | null;
 
 export type Board = BoardElement[];
