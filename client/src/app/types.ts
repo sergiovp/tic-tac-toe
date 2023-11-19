@@ -4,7 +4,7 @@ type BoardElement = TurnElement | null;
 
 type Board = BoardElement[];
 
-type Winner = 'O' | 'X' | 'Draw' | null;
+type Winner = 'O' | 'X' | 'draw' | null;
 
 type GameDifficulty = 'easy' | 'impossible';
 
