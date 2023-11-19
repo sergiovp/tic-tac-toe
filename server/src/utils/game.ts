@@ -1,6 +1,6 @@
-import { Board } from '../types';
+import { Board, Winner } from '../types';
 
-export function checkWinner(board: Board) {
+export function checkWinner(board: Board): Winner {
     const winConditions = [
         [0, 1, 2],
         [3, 4, 5],
@@ -24,4 +24,15 @@ export function checkWinner(board: Board) {
 
 export function isDraw(board: Board) {
     return board.every((square) => square !== null);
+}
+
+export function determineWinner(board: Board) {
+    let winner = checkWinner(board);
+
+    if (!winner) {
+        const isDrawGame = isDraw(board);
+        winner = isDrawGame ? 'draw' : null;
+    }
+
+    return winner;
 }
